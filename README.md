@@ -1,6 +1,6 @@
 # Amazon FC Assignment
 
-We will be mocking up the idea behind the Amazon's Robotic Fulfilment Center. Your program should at least have a CLI component. You could choose to use Arcade or PyQt5 for a GUI.
+We will be mocking up the idea behind the Amazon's Robotic Fulfillment Center. Your program should at least have a CLI component. You could choose to use Arcade or PyQt5 for a GUI.
 
 Topics:
 - Classes and objects
