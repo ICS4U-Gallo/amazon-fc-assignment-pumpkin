@@ -97,19 +97,30 @@ def send_to_packaging(product_dict: dict, order_info: dict) -> None:
     
     pass
 
+def generate_random_orders(products_filename, orders_list):
+
+    with open(products_filename) as csv_file:
+
+        id, name, dimensions = pull_product_from_csv(random.randint(0, len(csv_file)), csv_file) # Randomly select a product to order
+        product_dict = create_product_dict(id, name, dimensions)
+
+        orders_list.append(product_dict)
+
 orders = []
 shelf_obj_list = []
 
-init_shelfs(1000)
+init_shelfs(10)
+
+shelf_loading_stations = 5
+shelf_unloading_stations = 5
+
+order_packaging_stations = 5
 
 while True:
 
-    for _ in range(random.randint(0,5)): # Each iteration 0-5 random products will be ordered
+    for _ in range(random.randint(0,5)): # 0-5 random products will be ordered
+        generate_random_orders("products.csv", orders)
 
-        with open("products.csv") as csv_file:
-
-            id, name, dimensions = pull_product_from_csv(random.randint(0, len(csv_file)), csv_file) # Randomly select a product to order
-
-            product_dict = create_product_dict(id, name, dimensions)
-
-            scan_product_into_shelf(product_dict, shelf_obj_list[random.randint(0,len(shelf_obj_list))]) # Add the current product into a randomly selected shelf
+    
+    for _ in range(shelf_loading_stations):
+        scan_product_into_shelf(product_dict, shelf_obj_list[random.randint(0,len(shelf_obj_list))]) # Add the current product into a randomly selected shelf
