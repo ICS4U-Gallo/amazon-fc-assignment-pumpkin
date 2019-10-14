@@ -1,14 +1,14 @@
-Name,_id,width,length,height
+Name,id,width,length,height
 Razor,0001,10,10,10
-Soap,_0002,20,10,15
-Plate,_0003,30,30,5
-Fork,_0004,5,5,15
-Spoon,_0005,5,5,15
-Knife,_0006,5,5,15
-Phone Case,_0007,15,10,5
-Mouse,_0008,15,10,10
-Mouse Pad,_0009,30,30,5
-keyboard,_0010,50,30,15
-Chop Sticks,_0011,5,5,10
-Dog leash,_0012,5,5,10
-Water bottle,_0013,20,20,40
+Soap,0002,20,10,15
+Plate,0003,30,30,5
+Fork,0004,5,5,15
+Spoon,0005,5,5,15
+Knife,0006,5,5,15
+Phone Case,0007,15,10,5
+Mouse,0008,15,10,10
+Mouse Pad,0009,30,30,5
+keyboard,0010,50,30,15
+Chop Sticks,0011,5,5,10
+Dog leash,0012,5,5,10
+Water bottle,0013,20,20,40
