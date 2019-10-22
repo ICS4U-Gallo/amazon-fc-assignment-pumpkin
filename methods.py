@@ -6,13 +6,26 @@ import csv
 class Shelf:
     def __init__(self):
 
-        self.items = []
+        # A shelf has 4 faces that can hold items
+        # Each cubby is a 2-D list (think spreadsheets)
+        self.cubby_face0 = []
+        self.cubby_face1 = []
+        self.cubby_face2 = []
+        self.cubby_face3 = []
 
-def generate_random_order(batch_size: int) -> list:
-    """This function generates a random order
+class Item:
+    def __init__(self, id_, name, dimensions):
+
+        self.id = id_
+        self.name = name
+        self.dimensions = dimensions
+
+def generate_random_order(batch_size: int, product_csv_name: str) -> list:
+    """This function generates a random order list of length 'batch_size'
 
     Args:
         Batch size for order generation
+        Product_csv_name, the name of the csv file.
 
     Returns:
         A list of ordered products 
@@ -25,22 +38,27 @@ def generate_random_order(batch_size: int) -> list:
     
     rtn_ar = []
 
-    for _ in range(batch_size):
-        rtn_dict = {"first_name": first_names[random.randint(len(first_names))],
-                "last_name": last_names[random.randint(len(last_names))],
-                "street": street_names[random.randint(len(street_names))],
-                "street_number": random.randint(0,100)}
+    with open(product_csv_name) as _file:
+        
+        num_of_products = len(_file)
+
+        for _ in range(batch_size):
+            rtn_dict = {"first_name": first_names[random.randint(len(first_names))],
+                    "last_name": last_names[random.randint(len(last_names))],
+                    "street": street_names[random.randint(len(street_names))],
+                    "street_number": random.randint(0,100),
+                    "product_id": _file[random.randint(num_of_products)][1]}
         
         rtn_ar.append(rtn_dict)
 
     return rtn_ar
 
-def gererate_random_shippment(batch_size: int, product_json_name: str) -> list:
-    """This function generates a random incoming shippment
+def gererate_random_shippment(batch_size: int, product_csv_name: str) -> list:
+    """This function generates a random incoming shippment list of length 'batch_size'
 
     Args:
         Batch size for shippment generation
-        produt_json_name, the file name with which all products are stored in json format
+        produt_csv_name, the file name with which all products are stored in json format
 
     Returns:
         A list of inbound products
@@ -50,19 +68,24 @@ def gererate_random_shippment(batch_size: int, product_json_name: str) -> list:
 
     for _ in range(batch_size):
 
-        with open(product_json_name) as _file:
+        with open(product_csv_name) as _file:
         
             data = csv.reader(_file)
 
-            inbound_product.append(data[random.randint(len(_file))])
+            rand_row = _file[random.randint(len(_file))]
+
+            item = Item(rand_row[1], rand_row[0], [rand_row[2], rand_row[3], rand_row[4]]) # id name dim 
+            
+            inbound_products.append(item)
 
     return inbound_products
 
-def add_product_into_shelf(product_dictionary: dict, shelf_obj: object) -> None: # Joe
-    """Adds a product dictionary to a shelf_obj
+def add_product_into_shelf(product_obj: object, shelf_obj: object) -> None: # Joe
+    """Adds a product dictionary to a shelf_obj at the least populated cubby.
+
     Args:
-        product_dictionary, a dictionary in the form of the dict created in create_product_dict
-        shelf_obj, the shelf class-object add to the list of items via shelf_obj.items.append(______)
+        product_obj, a object of form self.____ (id, name, dimensions) 
+        shelf_obj, the shelf class-object add to the list of items via shelf_obj.cubby_face#[r][c].append(______)
     Returns:
         None
         """
