@@ -8,10 +8,11 @@ class Shelf:
 
         # A shelf has 4 faces that can hold items
         # Each cubby is a 2-D list (think spreadsheets)
-        self.cubby_face0 = []
-        self.cubby_face1 = []
-        self.cubby_face2 = []
-        self.cubby_face3 = []
+        # [Rows][columns] --> a list of items in that cubby slot
+        self.cubby_face0 = [[[],[],[],[]], [[],[],[],[]], [,[],[],[],[]], [[],[],[],[]]]
+        self.cubby_face1 = [[[],[],[],[]], [[],[],[],[]], [,[],[],[],[]], [[],[],[],[]]]
+        self.cubby_face2 = [[[],[],[],[]], [[],[],[],[]], [,[],[],[],[]], [[],[],[],[]]]
+        self.cubby_face3 = [[[],[],[],[]], [[],[],[],[]], [,[],[],[],[]], [[],[],[],[]]]
 
 class Item:
     def __init__(self, id_, name, dimensions):
@@ -22,11 +23,9 @@ class Item:
 
 def generate_random_order(batch_size: int, product_csv_name: str) -> list:
     """This function generates a random order list of length 'batch_size'
-
     Args:
         Batch size for order generation
         Product_csv_name, the name of the csv file.
-
     Returns:
         A list of ordered products 
         """
@@ -55,11 +54,9 @@ def generate_random_order(batch_size: int, product_csv_name: str) -> list:
 
 def gererate_random_shippment(batch_size: int, product_csv_name: str) -> list:
     """This function generates a random incoming shippment list of length 'batch_size'
-
     Args:
         Batch size for shippment generation
         produt_csv_name, the file name with which all products are stored in json format
-
     Returns:
         A list of inbound products
         """
@@ -82,17 +79,16 @@ def gererate_random_shippment(batch_size: int, product_csv_name: str) -> list:
 
 def add_product_into_shelf(product_obj: object, shelf_obj: object) -> None: # Joe
     """Adds a product dictionary to a shelf_obj at the least populated cubby.
-
     Args:
         product_obj, a object of form self.____ (id, name, dimensions) 
-        shelf_obj, the shelf class-object add to the list of items via shelf_obj.cubby_face#[r][c].append(______)
+        shelf_obj, the shelf class-object add to the list of items via shelf_obj.cubby_face#[row][column].append(______)
     Returns:
         None
         """
 
     pass
 
-def compare_shelf_against_orders(target_id: str, shelf_obj: object, orders: list) -> dict:
+def compare_shelf_against_orders(target_id: str, shelf_obj: object, orders: list) -> dict: # Henson
     """Search through the list of customer orders, and compare it against the current availble shelf (shelf_obj.items)
     Args:
         target_id, a string that corosponds to a product dictionary key (ie: product_dictionary["Product_id"])
@@ -104,7 +100,7 @@ def compare_shelf_against_orders(target_id: str, shelf_obj: object, orders: list
 
     pass
 
-def remove_product_from_shelf(target_index: int, shelf_obj: object) -> None:
+def remove_product_from_shelf(target_index: int, shelf_obj: object) -> None: # Mehana
     """After an employee is told to take a product out of a shelf, it has to be removed from the list as it is no longer physically there
     Args:
         target_index, representing the index of the product targeted for deletion within the shelf_obj.items list
@@ -115,24 +111,14 @@ def remove_product_from_shelf(target_index: int, shelf_obj: object) -> None:
 
     pass
 
-def send_to_packaging(product_dict: dict, order_info: dict) -> dict:
+def send_to_packaging(product_obj: object, order_info: dict) -> dict: # Sydney
     """After a product is removed from the shelf it needs to be packaged and shipped.
     Args:
-        product_dict, a dictionary that contains the information about the product
+        product_obj, a object that contains all the product attributes
         order_info, a dictionary that contains the information about the order
     
     Returns:
-        a dictionary containing, product dimensions, recipient information.
+        a dictionary containing, product pointer, and recipient information.
         """
     
-    pass
-
-def display_packaging_specs(packaging_info_dict: dict):
-    """After the item is taken off the shelf, and a certain order is began the last steps are shipping and packaging
-    The function recieves bundles info from the 'send_to_packing' function and then formats the info in a return statment
-    for easy GUI implementation"""
-
-    product_info = packaging_info_dict["dimensions"]
-    order_info = packaging_info_dict["order_info"]
-
     pass
