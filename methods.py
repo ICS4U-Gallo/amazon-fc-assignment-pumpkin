@@ -9,10 +9,11 @@ class Shelf:
         # A shelf has 4 faces that can hold items
         # Each cubby is a 2-D list (think spreadsheets)
         # [Rows][columns] --> a list of items in that cubby slot
-        self.cubby_face0 = [[[],[],[],[]], [[],[],[],[]], [,[],[],[],[]], [[],[],[],[]]]
-        self.cubby_face1 = [[[],[],[],[]], [[],[],[],[]], [,[],[],[],[]], [[],[],[],[]]]
-        self.cubby_face2 = [[[],[],[],[]], [[],[],[],[]], [,[],[],[],[]], [[],[],[],[]]]
-        self.cubby_face3 = [[[],[],[],[]], [[],[],[],[]], [,[],[],[],[]], [[],[],[],[]]]
+
+        self.cubby_face0 = [[[],[],[],[]], [[],[],[],[]], [[],[],[],[]], [[],[],[],[]]]
+        self.cubby_face1 = [[[],[],[],[]], [[],[],[],[]], [[],[],[],[]], [[],[],[],[]]]
+        self.cubby_face2 = [[[],[],[],[]], [[],[],[],[]], [[],[],[],[]], [[],[],[],[]]]
+        self.cubby_face3 = [[[],[],[],[]], [[],[],[],[]], [[],[],[],[]], [[],[],[],[]]]
 
 class Item:
     def __init__(self, id_, name, dimensions):
@@ -21,7 +22,7 @@ class Item:
         self.name = name
         self.dimensions = dimensions
 
-def generate_random_order(batch_size: int, product_csv_name: str) -> list:
+def generate_random_order(target_ar: list, batch_size: int, product_csv_name: str) -> list:
     """This function generates a random order list of length 'batch_size'
     Args:
         Batch size for order generation
@@ -34,8 +35,6 @@ def generate_random_order(batch_size: int, product_csv_name: str) -> list:
     last_names = ["Smith", "Johnson", "Edwards", "Kim", "Low"]
 
     street_names = ["Leslie", "6th Avenue", "Finch", "Bayview", "College", "Major Mackenzie"]
-    
-    rtn_ar = []
 
     with open(product_csv_name) as _file:
         
@@ -46,13 +45,37 @@ def generate_random_order(batch_size: int, product_csv_name: str) -> list:
                     "last_name": last_names[random.randint(len(last_names))],
                     "street": street_names[random.randint(len(street_names))],
                     "street_number": random.randint(0,100),
-                    "product_id": _file[random.randint(num_of_products)][1]}
+                    "product_id": _file[random.randint(1, num_of_products)][1]}
         
-        rtn_ar.append(rtn_dict)
+        target_ar.append(rtn_dict)
 
-    return rtn_ar
+def fill_shelves_randomly(shelves: List[object], product_csv_name: str, items_per_cubby: int) -> None:
+    """For simulation purposes fill Shelve object with random products.
 
-def gererate_random_shippment(batch_size: int, product_csv_name: str) -> list:
+    Args:
+        A list of empty Shelve objects.
+        the name of the csv file with all possible products.
+        items_per_cubby is the number of items added to the cubbies
+    """
+
+    for _ in range(items_per_cubby):
+        with open(product_csv_name) as _file:
+
+            data = csv.reader(_file)    
+
+            for shelve in shelves:
+            
+                rand_row = data[random.randint(1, len(data))]
+
+                name = rand_row[0]        
+                id = rand_row[1]
+                dim = [rand_row[2], rand_row[3], rand_row[4]]
+
+                rand_prod = Item( id, name, dimensions)
+
+                add_product_into_shelf(rand_prod, shelves)
+
+def gererate_random_shipment(batch_size: int, target_ar: list, product_csv_name: str) -> list:
     """This function generates a random incoming shippment list of length 'batch_size'
     Args:
         Batch size for shippment generation
@@ -61,7 +84,7 @@ def gererate_random_shippment(batch_size: int, product_csv_name: str) -> list:
         A list of inbound products
         """
     
-    inbound_products = []
+    inbound_products = target_ar
 
     for _ in range(batch_size):
 
@@ -69,13 +92,18 @@ def gererate_random_shippment(batch_size: int, product_csv_name: str) -> list:
         
             data = csv.reader(_file)
 
-            rand_row = _file[random.randint(len(_file))]
+            rand_row = data[random.randint(1, len(data))]
 
             item = Item(rand_row[1], rand_row[0], [rand_row[2], rand_row[3], rand_row[4]]) # id name dim 
             
             inbound_products.append(item)
 
     return inbound_products
+
+def generate_empty_shelves(batch_size: int, target_ar: list) -> None:
+
+    for i in range(batch_size):
+        target_ar.append(Shelf())
 
 def add_product_into_shelf(product_obj: object, shelf_obj: object) -> None: # Joe
     """Adds a product dictionary to a shelf_obj at the least populated cubby.
@@ -120,6 +148,5 @@ def send_to_packaging(product_obj: object, order_info: dict) -> dict: # Sydney
     Returns:
         a dictionary containing, product pointer, and recipient information.
         """
-    product_obj = Item() 
-    order_info = {rtn_ar, product_obj} 
+    
     pass
