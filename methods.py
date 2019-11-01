@@ -1,6 +1,5 @@
 from typing import List
 import random
-import json
 import csv
 
 class Shelf:
@@ -104,6 +103,10 @@ def generate_empty_shelves(batch_size: int, target_ar: list) -> None:
 
     for i in range(batch_size):
         target_ar.append(Shelf())
+
+def check_shelve_stock(shelves: List[object]) -> int:
+
+    sum = 0
 
 def add_product_into_shelf(product_obj: object, shelf_obj: object) -> None: # Joe
     """Adds a product dictionary to a shelf_obj at the least populated cubby.
