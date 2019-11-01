@@ -151,5 +151,7 @@ def send_to_packaging(product_obj: object, order_info: dict) -> dict: # Sydney
     Returns:
         a dictionary containing, product pointer, and recipient information.
         """
+    product_obj = Item()
+    order_info = {product_obj, rtn_dict}
+    return order_info
     
-    pass
