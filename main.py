@@ -19,6 +19,11 @@ def main(input):
     while True:
         user_obj.action()
 
+        if user_obj.check_update_thresh():
+            user_obj.update()
+    
+    user_obj.gen_exit_report()
+
 def initialize_session(_type_):
     if _type_ == "scan_in":
         scan_in_session()
