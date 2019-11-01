@@ -108,14 +108,7 @@ def check_shelve_stock(shelves: List[object]) -> int:
 
     sum = 0
 
-def add_product_into_shelf(product_obj: object, shelf_obj: object) -> None: # Joe
-    """Adds a product dictionary to a shelf_obj at the least populated cubby.
-    Args:
-        product_obj, a object of form self.____ (id, name, dimensions) 
-        shelf_obj, the shelf class-object add to the list of items via shelf_obj.cubby_face#[row][column].append(______)
-    Returns:
-        None
-        """
+
 def add_product_into_shelf(product_obj: object, shelf_obj: object) -> None: # Joe
     """Adds a product dictionary to a shelf_obj at the least populated cubby.
     Args:
@@ -147,35 +140,49 @@ for row in cubby_face1:
   
   row_counter += 1
 
+index_of_min_row1 = 0
+index_of_min_col1 = 0
+row_counter = 0
+col_counter = 0
 for row in cubby_face0:
   for hole in row:
 
-    if len(hole) < len(cubby[index_of_min_row][index_of_min_col]):
+    if len(hole) < len(cubby[index_of_min_row1][index_of_min_col1]):
       index_of_min = 
     
     counter += 1
   
   row_counter += 1
 
+index_of_min_row2 = 0
+index_of_min_col2 = 0
+row_counter = 0
+col_counter = 0
 for row in cubby_face2:
   for hole in row:
 
-    if len(hole) < len(cubby[index_of_min_row][index_of_min_col]):
+    if len(hole) < len(cubby[index_of_min_row2][index_of_min_col2]):
       index_of_min = 
     
     counter += 1
   
   row_counter += 1
+
+index_of_min_row3 = 0
+index_of_min_col3 = 0
+row_counter = 0
+col_counter = 0
 
 for row in cubby_face3:
   for hole in row:
 
-    if len(hole) < len(cubby[index_of_min_row][index_of_min_col]):
+    if len(hole) < len(cubby[index_of_min_row3][index_of_min_col3]):
       index_of_min = 
     
     counter += 1
   
   row_counter += 1
+
 
 def compare_shelf_against_orders(target_id: str, shelf_obj: object, orders: list) -> dict: # Henson
     """Search through the list of customer orders, and compare it against the current availble shelf (shelf_obj.items)
